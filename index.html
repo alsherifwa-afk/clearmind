@@ -20,15 +20,14 @@
 
   <br><br>
 
-  <button onclick="cleanMind()" style="padding:10px 20px;">
+  <button id="cleanBtn" style="padding:10px 20px;">
     🧹 Clean My Mind
   </button>
 
   <pre id="result" style="margin-top:20px;"></pre>
 
-  <!-- SCRIPT MUST BE AT THE BOTTOM -->
   <script>
-    async function cleanMind() {
+    document.getElementById("cleanBtn").addEventListener("click", async () => {
       const text = document.getElementById("dump").value;
 
       if (!text.trim()) {
@@ -42,22 +41,19 @@
         const res = await fetch("https://cleanmind-594600499248.europe-west1.run.app", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: text })
+          body: JSON.stringify({ text })
         });
 
         const data = await res.json();
-
-        if (data.reply) {
-          document.getElementById("result").innerText = data.reply;
-        } else {
-          document.getElementById("result").innerText = "No response from AI.";
-        }
+        document.getElementById("result").innerText =
+          data.reply || "No response from AI.";
 
       } catch (err) {
         console.error(err);
-        document.getElementById("result").innerText = "Error connecting to AI.";
+        document.getElementById("result").innerText =
+          "Error connecting to AI.";
       }
-    }
+    });
   </script>
 
 </body>
