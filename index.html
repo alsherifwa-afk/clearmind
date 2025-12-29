@@ -22,24 +22,18 @@
 
   <script>
     async function cleanMind() {
-      const text = document.getElementById("dump").value;
-      document.getElementById("result").innerText = "Cleaning...";
+  const text = document.getElementById("dump").value;
+  document.getElementById("result").innerText = "Cleaning...";
 
-      // TEMP: Fake response (we will replace this)
-      setTimeout(() => {
-        document.getElementById("result").innerText =
-`Today’s Clarity:
+  const res = await fetch(https://cleanmind-594600499248.europe-west1.run.app, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text })
+  });
 
-Do this:
-• Reply to one message (2 min)
-• Pay one bill (5 min)
-
-Not today:
-• Everything else
-
-You’re done for today.`;
-      }, 1000);
-    }
+  const data = await res.json();
+  document.getElementById("result").innerText = data.reply;
+}
   </script>
 
 </body>
