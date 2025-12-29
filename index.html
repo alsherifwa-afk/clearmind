@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>ClearMind</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body style="font-family: Arial; max-width: 600px; margin: auto; padding: 20px;">
 
   <h1>ClearMind</h1>
   <p>Unload your mind. Leave lighter.</p>
 
-  <textarea id="dump" rows="8" style="width:100%;"
-    placeholder="Type everything on your mind..."></textarea>
+  <textarea
+    id="dump"
+    rows="8"
+    style="width:100%;"
+    placeholder="Type everything on your mind...">
+  </textarea>
 
   <br><br>
 
@@ -20,42 +26,38 @@
 
   <pre id="result" style="margin-top:20px;"></pre>
 
+  <!-- SCRIPT MUST BE AT THE BOTTOM -->
   <script>
-    <script>
-async function cleanMind() {
-  const text = document.getElementById("dump").value;
+    async function cleanMind() {
+      const text = document.getElementById("dump").value;
 
-  if (!text.trim()) {
-    document.getElementById("result").innerText = "Please type something first.";
-    return;
-  }
+      if (!text.trim()) {
+        document.getElementById("result").innerText = "Please type something first.";
+        return;
+      }
 
-  document.getElementById("result").innerText = "Cleaning...";
+      document.getElementById("result").innerText = "Cleaning...";
 
-  try {
-    const res = await fetch("https://cleanmind-594600499248.europe-west1.run.app", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ text: text })
-    });
+      try {
+        const res = await fetch("https://cleanmind-594600499248.europe-west1.run.app", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: text })
+        });
 
-    const data = await res.json();
+        const data = await res.json();
 
-    if (data.reply) {
-      document.getElementById("result").innerText = data.reply;
-    } else {
-      document.getElementById("result").innerText = "No response from AI.";
+        if (data.reply) {
+          document.getElementById("result").innerText = data.reply;
+        } else {
+          document.getElementById("result").innerText = "No response from AI.";
+        }
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById("result").innerText = "Error connecting to AI.";
+      }
     }
-
-  } catch (err) {
-    document.getElementById("result").innerText = "Error connecting to AI.";
-    console.error(err);
-  }
-}
-</script>
-
   </script>
 
 </body>
