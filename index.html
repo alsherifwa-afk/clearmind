@@ -21,19 +21,41 @@
   <pre id="result" style="margin-top:20px;"></pre>
 
   <script>
-    async function cleanMind() {
+    <script>
+async function cleanMind() {
   const text = document.getElementById("dump").value;
+
+  if (!text.trim()) {
+    document.getElementById("result").innerText = "Please type something first.";
+    return;
+  }
+
   document.getElementById("result").innerText = "Cleaning...";
 
-  const res = await fetch(https://cleanmind-594600499248.europe-west1.run.app, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text })
-  });
+  try {
+    const res = await fetch("https://cleanmind-594600499248.europe-west1.run.app", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ text: text })
+    });
 
-  const data = await res.json();
-  document.getElementById("result").innerText = data.reply;
+    const data = await res.json();
+
+    if (data.reply) {
+      document.getElementById("result").innerText = data.reply;
+    } else {
+      document.getElementById("result").innerText = "No response from AI.";
+    }
+
+  } catch (err) {
+    document.getElementById("result").innerText = "Error connecting to AI.";
+    console.error(err);
+  }
 }
+</script>
+
   </script>
 
 </body>
