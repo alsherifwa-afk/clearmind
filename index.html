@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ClearMind</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: Arial; max-width: 600px; margin: auto; padding: 20px;">
+
+  <h1>ClearMind</h1>
+  <p>Unload your mind. Leave lighter.</p>
+
+  <textarea id="dump" rows="8" style="width:100%;"
+    placeholder="Type everything on your mind..."></textarea>
+
+  <br><br>
+
+  <button onclick="cleanMind()" style="padding:10px 20px;">
+    🧹 Clean My Mind
+  </button>
+
+  <pre id="result" style="margin-top:20px;"></pre>
+
+  <script>
+    async function cleanMind() {
+      const text = document.getElementById("dump").value;
+      document.getElementById("result").innerText = "Cleaning...";
+
+      // TEMP: Fake response (we will replace this)
+      setTimeout(() => {
+        document.getElementById("result").innerText =
+`Today’s Clarity:
+
+Do this:
+• Reply to one message (2 min)
+• Pay one bill (5 min)
+
+Not today:
+• Everything else
+
+You’re done for today.`;
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
